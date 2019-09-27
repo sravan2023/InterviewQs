@@ -1,13 +1,20 @@
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ScatteredSubStringPalandrome {
 
 	public static void main(String[] args) {
+		Instant start = Instant.now();
+
 		List<String> strToEvaluate = new ArrayList<>();
-		strToEvaluate.add("venkatsravankumarpentakota");
+		strToEvaluate.add("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		System.out.println(scatterPalindrome(strToEvaluate));
+
+		Instant finish = Instant.now();
+		long timeElapsed = Duration.between(start, finish).toMillis();
+		System.out.println(timeElapsed);
 	}
 
 	public static List<Integer> scatterPalindrome(List<String> strToEvaluate) {
@@ -26,21 +33,17 @@ public class ScatteredSubStringPalandrome {
 	private static int getScatterPalindromeFor(String str) {
 		char s[] = str.toCharArray();
 		int count = s.length;
-		int[] alphas = new int[26];
 
-		for (int i=0;i< s.length; i++) {
+		for (int i = 0; i < s.length; i++) {
+			int[] alphas = new int[26];
 			alphas[s[i] - 'a']++;
-			int[] tempAlphas = Arrays.copyOf(alphas, alphas.length);
-			for (int j = i+1; j < s.length; j++) {
-				tempAlphas[s[j] - 'a']++;
-				if(isPalindrome(tempAlphas)) {
-					System.out.println(">>> " + str.substring(i,j+1));
+			for (int j = i + 1; j < s.length; j++) {
+				alphas[s[j] - 'a']++;
+				if (isPalindrome(alphas)) {
 					count++;
 				}
 			}
-			alphas[s[i] - 'a']--;
 		}
-
 		return count;
 	}
 
